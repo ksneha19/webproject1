@@ -23,7 +23,7 @@ export class CountrypopulationComponent implements OnInit {
       next: result => this.CountryPopulation = result,
       error: e => console.error(e)
     }
-      )
+      );
   }
 
   }
