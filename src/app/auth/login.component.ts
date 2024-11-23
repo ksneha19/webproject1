@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './login-response';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,11 @@ onSubmit(): void {
     {
       next: result => {
         loginResponse = result;
-        console.log(loginResponse)
+        console.log(loginResponse);
+        if (result.success){
+          localStorage.setItem ("comp584sk",result.token);
+        }
+
       },
       error: e => console.error(e)
     }
