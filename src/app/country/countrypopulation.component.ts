@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class CountrypopulationComponent implements OnInit {
   id: number = -1;
-  public CountryPopulation!: CountryPopulation;
+  public CountryPopulation: CountryPopulation | undefined;
   constructor(private http: HttpClient, private activatedRoute:ActivatedRoute) {}
   ngOnInit(): void {
     let idparam = this.activatedRoute.snapshot.paramMap.get('id');

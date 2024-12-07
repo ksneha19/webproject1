@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
   imports: [
-    RouterOutlet,
-    RouterLink, 
+     RouterLink, 
     MatIconModule,
     MatToolbar,
     MatButtonModule
@@ -18,9 +19,18 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
-onLogOut() {
-throw new Error('Method not implemented.');
-}
- loggedIn: boolean = false;
-  
-}
+  private destroySubject = new Subject();
+  isloggedIn: boolean = false;
+  constructor(private authService : AuthService, private router: Router){
+    authService.authStatus.pipe(takeUntil(this.destroySubject))
+    .subscribe(result => {
+      this.isloggedIn = result;
+    });
+  }
+  onLogOut() {
+    this.authService.logout();
+    this.router.navigate(["/login"]);
+    }
+    
+      
+    }
